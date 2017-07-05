@@ -30,4 +30,12 @@ class PK_Loader extends CI_Loader {
 		$this -> _ci_view_paths = array(APPPATH . ADMIN_VIEW_DIR => TRUE);
 	}
 
+    /**
+     * 设置后台视图路径
+     */
+    public function set_api_dir() {
+        $this -> _ci_view_paths = array(APPPATH . API_DIR => TRUE);
+    }
+
+
 }

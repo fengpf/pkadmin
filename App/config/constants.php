@@ -100,5 +100,7 @@ defined('EXIT__AUTO_MAX') OR define('EXIT__AUTO_MAX', 125);
 define('HOME_VIEW_DIR', 'views/Home/');
 //定义后台视图路径常量
 define('ADMIN_VIEW_DIR', 'views/Pkadmin/');
+//定义API路径常量
+define('API_DIR', 'API/');
 //版本
 define('PKADMIN_VERSION', '1.0.0');

@@ -113,3 +113,15 @@ class Pkadmin_Controller extends CI_Controller {
 	}
 
 }
+
+/**
+ * API控制器
+ */
+class API_Controller extends CI_Controller {
+    public $data;
+    public function __construct() {
+        parent::__construct();
+        $this -> load -> set_api_dir();
+    }
+
+}

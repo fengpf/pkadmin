@@ -97,21 +97,22 @@ class Article extends Pkadmin_Controller {
 		$params['content'] = $this -> input -> post('content');
 		$params['edit_time'] = time();
 
+        $tmp_name = $_FILES['article_pic']['tmp_name'];
 		//文章插图上传
-		if (!empty($_FILES['article_pic']['tmp_name'])) {
+		if (!empty($tmp_name)) {
 			//配置上传参数
-			$config['upload_path'] = './Data/upload/article_pic/' . date("Ym");
+			$config['upload_path'] = 'Data/upload/article_pic/' . date("Y-m-d");
 			//原图路径
 			if (!file_exists($config['upload_path'])) {
 				mkdir($config['upload_path'], 0777, true);
 			}
 			$config['allowed_types'] = 'gif|jpg|jpeg|png';
-			$config['file_name'] = 'pkadmin_' . date("YmdHis") . random();
+			$config['file_name'] = date("Y-m-d H:i:s");
 			$config['max_size'] = 2048;
 			$this -> load -> library('upload', $config);
 			if ($this -> upload -> do_upload('article_pic')) {
 				$article_pic_info = $this -> upload -> data();
-				$path_info = "Data/upload/article_pic/" . date("Ym") . "/";
+				$path_info = "Data/upload/article_pic/" . date("Y-m-d") . "/";
 				$params['article_pic'] = $path_info . $article_pic_info['file_name'];
 			} else {
 				$error['msg'] = $this -> upload -> display_errors();
