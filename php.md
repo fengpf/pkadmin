@@ -72,14 +72,14 @@ listen = 0.0.0.0:9000
 user = www-data
 group = www-data
 pm = dynamic
-pm.max_children = 16
-pm.start_servers = 4
-pm.min_spare_servers = 4
-pm.max_spare_servers = 8
+pm.max_children = 8
+pm.start_servers = 2
+pm.min_spare_servers = 2
+pm.max_spare_servers = 4
 pm.max_requests = 5000
 request_terminate_timeout = 30s
 request_slowlog_timeout = 25s
-slowlog = //data/logs/php-slow.log
+slowlog = /data/log/php-slow.log
 php_admin_value[upload_tmp_dir] = /data/tmp/
 
 ```
