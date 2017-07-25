@@ -82,7 +82,7 @@ $db['default'] = array(
 	'dbdriver' => 'pdo',//pdo /mysql
 	'dbprefix' => 'pk_',
 	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
+	'db_debug' => true, //(ENVIRONMENT !== 'production')
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
@@ -94,3 +94,26 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+
+//$db['default'] = array(
+//    'dsn'	=> 'mysql:dbname=qdm109009512_db;host=qdm109009512.my3w.com',//pdo
+//    'hostname' => 'qdm109009512_db',
+//    'username' => 'qdm109009512',
+//    'password' => 'QDM109009',
+//    'database' => '',
+//    'dbdriver' => 'pdo',//pdo /mysql
+//    'dbprefix' => 'pk_',
+//    'pconnect' => FALSE,
+//    'db_debug' => true, //(ENVIRONMENT !== 'production')
+//    'cache_on' => FALSE,
+//    'cachedir' => '',
+//    'char_set' => 'utf8',
+//    'dbcollat' => 'utf8_general_ci',
+//    'swap_pre' => '',
+//    'encrypt' => FALSE,
+//    'compress' => FALSE,
+//    'stricton' => FALSE,
+//    'failover' => array(),
+//    'save_queries' => TRUE
+//);

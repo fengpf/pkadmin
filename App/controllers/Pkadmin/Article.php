@@ -101,7 +101,7 @@ class Article extends Pkadmin_Controller {
 		//文章插图上传
 		if (!empty($tmp_name)) {
 			//配置上传参数
-			$config['upload_path'] = 'Data/upload/article_pic/' . date("Y-m-d");
+			$config['upload_path'] = 'Data/upload/article_pic';
 			//原图路径
 			if (!file_exists($config['upload_path'])) {
 				mkdir($config['upload_path'], 0777, true);
@@ -112,7 +112,7 @@ class Article extends Pkadmin_Controller {
 			$this -> load -> library('upload', $config);
 			if ($this -> upload -> do_upload('article_pic')) {
 				$article_pic_info = $this -> upload -> data();
-				$path_info = "Data/upload/article_pic/" . date("Y-m-d") . "/";
+				$path_info = "Data/upload/article_pic/";
 				$params['article_pic'] = $path_info . $article_pic_info['file_name'];
 			} else {
 				$error['msg'] = $this -> upload -> display_errors();

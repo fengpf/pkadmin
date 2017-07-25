@@ -27,7 +27,7 @@ class JJl extends API_Controller {
      * @param int $offset 偏移量，用于分页
      */
     public function index() {
-        $offset = isset($_GET['offset']) ? $_GET['offset'] : 1;
+        $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
         $data = $this -> data;
         //配置分页信息
         $config['base_url'] = site_url('API/JJl/index/');
@@ -41,6 +41,7 @@ class JJl extends API_Controller {
         foreach ($article_list as $k => $v) {
             $catrgory = $this -> ac -> get_category_info($v['category_id']);
             $article_list[$k]['category_name'] = $catrgory['category_name'];
+            $article_list[$k]['article_pic'] = base_url($v['article_pic']);
         }
         $data['article_list'] = $article_list;
         echo json_encode($data);
