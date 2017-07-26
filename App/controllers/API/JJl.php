@@ -44,6 +44,7 @@ class JJl extends API_Controller {
             $article_list[$k]['article_pic'] = base_url($v['article_pic']);
         }
         $data['article_list'] = $article_list;
+        header("Access-Control-Allow-Origin: * ");
         echo json_encode($data);
     }
 
