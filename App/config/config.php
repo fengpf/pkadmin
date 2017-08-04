@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  | a PHP script and you can easily do that on your own.
  |
  */
-$config['base_url'] = 'http://test.com';
-
+//$config['base_url'] = 'http://test.com';//test
+$config['base_url'] = 'http://jelleybrown.com.cn';//official
 /*
  |--------------------------------------------------------------------------
  | Index File
@@ -367,10 +367,10 @@ $config['encryption_key'] = 'aab3162f9de3bdd00f7dd52662fed21d';
  | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
  |
  */
-$config['sess_driver'] = 'files';
+$config['sess_driver'] = 'database';//files/database/redis/memcached/custom
 $config['sess_cookie_name'] = 'pk_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = FCPATH .'Public/sess_save_path';
+$config['sess_save_path'] = 'ci_sessions';//FCPATH .'Public/sess_save_path'
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
