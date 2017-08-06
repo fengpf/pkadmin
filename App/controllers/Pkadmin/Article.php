@@ -19,6 +19,7 @@ class Article extends Pkadmin_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this -> load -> library('pagination');
+		//$this -> load -> library('Imgupload');
 		$this -> load -> model('article_model', 'ac');
 	}
 
@@ -59,7 +60,15 @@ class Article extends Pkadmin_Controller {
 	public function edit($id) {
 		$data = $this -> data;
 		$data['category_list'] = $this -> ac -> get_category_list();
-		$data['article'] = $this -> ac -> get_article_info($id);
+		$article = $this -> ac -> get_article_info($id);
+		$arr =  json_decode($article['article_pic'], true);
+		if (!empty($arr)) {
+			foreach ($arr as $k => $v) {
+				$arr[$k] = base_url($v);
+			}
+		}
+		$article['article_pic'] = $arr;
+		$data['article'] = $article;
 		$this -> load -> view('article_edit.html', $data);
 	}
 
@@ -97,32 +106,62 @@ class Article extends Pkadmin_Controller {
 		$params['content'] = $this -> input -> post('content');
 		$params['edit_time'] = time();
 
-        $tmp_name = $_FILES['article_pic']['tmp_name'];
-		//文章插图上传
-		if (!empty($tmp_name)) {
-			//配置上传参数
-			$config['upload_path'] = 'Data/upload/article_pic';
-			//原图路径
-			if (!file_exists($config['upload_path'])) {
-				mkdir($config['upload_path'], 0777, true);
-			}
-			$config['allowed_types'] = 'gif|jpg|jpeg|png';
-			$config['file_name'] = date("Y-m-d H:i:s");
-			$config['max_size'] = 2048;
-			$this -> load -> library('upload', $config);
-			if ($this -> upload -> do_upload('article_pic')) {
-				$article_pic_info = $this -> upload -> data();
-				$path_info = "Data/upload/article_pic/";
-				$params['article_pic'] = $path_info . $article_pic_info['file_name'];
-			} else {
-				$error['msg'] = $this -> upload -> display_errors();
-				$error['url'] = site_url("Pkadmin/Article/index");
-				$error['wait'] = 3;
-				$data['error'] = $error;
-				$this -> load -> view('error.html', $data);
-				return;
+
+		$file = $_FILES['article_pic'];  //得到传输的数据,以数组的形式
+		$name = $file['name'];      //得到文件名称，以数组的形式
+		$upload_path = "Data/upload/article_pic"; //上传文件的存放路径//当前位置
+
+		foreach ($name as $k=>$names){
+			$type = strtolower(substr($names,strrpos($names,'.')+1));//得到文件类型，并且都转化成小写
+			$allow_type = array('jpg','jpeg','gif','png'); //定义允许上传的类型
+			//把非法格式的图片去除
+			if (!in_array($type,$allow_type)){
+				unset($name[$k]);
 			}
 		}
+		$img = [];
+		foreach ($name as $k=>$item){
+			$type = strtolower(substr($item,strrpos($item,'.')+1));//得到文件类型，并且都转化成小写
+			if (move_uploaded_file($file['tmp_name'][$k],$upload_path.time().$name[$k])){
+				$img[$k]= $upload_path.time().$name[$k];
+			}else{
+				echo 'failed';
+			}
+		}
+		if ($id > 0){
+			$article = $this -> ac -> get_article_info($id);
+			$arr =  json_decode($article['article_pic'], true);
+			if (is_array($arr) && is_array($img)){
+				$img= array_merge($arr, $img);
+			}
+		}
+		$params['article_pic'] = json_encode($img);
+		//文章插图上传
+//		$tmp_name = $_FILES['article_pic']['tmp_name'];
+//		if (!empty($tmp_name)) {
+//			//配置上传参数
+//			$config['upload_path'] = 'Data/upload/article_pic';
+//			//原图路径
+//			if (!file_exists($config['upload_path'])) {
+//				mkdir($config['upload_path'], 0777, true);
+//			}
+//			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+//			$config['file_name'] = date("Y-m-d H:i:s");
+//			$config['max_size'] = 2048;
+//			$this -> load -> library('upload', $config);
+//			if ($this -> upload -> do_upload('article_pic')) {
+//				$article_pic_info = $this -> upload -> data();
+//				$path_info = "Data/upload/article_pic/";
+//				$params['article_pic'] = $path_info . $article_pic_info['file_name'];
+//			} else {
+//				$error['msg'] = $this -> upload -> display_errors();
+//				$error['url'] = site_url("Pkadmin/Article/index");
+//				$error['wait'] = 3;
+//				$data['error'] = $error;
+//				$this -> load -> view('error.html', $data);
+//				return;
+//			}
+//		}
 		if ($id) {
 			//修改文章
 			if ($this -> ac -> update_article($id, $params)) {

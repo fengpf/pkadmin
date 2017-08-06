@@ -41,7 +41,13 @@ class JJl extends API_Controller {
         foreach ($article_list as $k => $v) {
             $catrgory = $this -> ac -> get_category_info($v['category_id']);
             $article_list[$k]['category_name'] = $catrgory['category_name'];
-            $article_list[$k]['article_pic'] = base_url($v['article_pic']);
+            $arr =  json_decode($v['article_pic'], true);
+            if (!empty($arr)) {
+                foreach ($arr as $kk => $vv) {
+                    $arr[$kk] = base_url($vv);
+                }
+            }
+            $article_list[$k]['article_pic'] = $arr;
         }
         $data['article_list'] = $article_list;
         header("Access-Control-Allow-Origin: * ");
@@ -55,7 +61,13 @@ class JJl extends API_Controller {
     {
         $id = isset($_GET['id']) ? $_GET['id'] : 0;
         $article = $this -> ac -> get_article_info($id);
-        $article['article_pic'] = base_url($article['article_pic']);
+        $arr =  json_decode($article['article_pic'], true);
+        if (!empty($arr)) {
+            foreach ($arr as $k => $v) {
+                $arr[$k] = base_url($v);
+            }
+        }
+        $article['article_pic'] = $arr;
         header("Access-Control-Allow-Origin: * ");
         echo json_encode($article);
     }

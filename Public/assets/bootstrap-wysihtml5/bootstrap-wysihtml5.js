@@ -324,49 +324,49 @@
 	var locale = $.fn.wysihtml5.locale = {
 		en: {
 			font_styles: {
-				normal: "Normal text",
-				h1: "Heading 1",
-				h2: "Heading 2",
-				h3: "Heading 3",
-				h4: "Heading 4",
-				h5: "Heading 5",
-				h6: "Heading 6"
+				normal: "正常字体",
+				h1: "一级标题",
+				h2: "二级标题",
+				h3: "三级标题",
+				h4: "四级标题",
+				h5: "五级标题",
+				h6: "六级标题"
 			},
 			emphasis: {
-				bold: "Bold",
-				italic: "Italic",
-				underline: "Underline"
+				bold: "粗体",
+				italic: "斜体",
+				underline: "下划线"
 			},
 			lists: {
-				unordered: "Unordered list",
-				ordered: "Ordered list",
-				outdent: "Outdent",
-				indent: "Indent"
+				unordered: "无序列表",
+				ordered: "有序列表",
+				outdent: "减少缩进",
+				indent: "缩进"
 			},
 			link: {
-				insert: "Insert link",
-				cancel: "Cancel",
-				target: "Open link in new window"
+				insert: "插入链接",
+				cancel: "取消",
+				target: "在新窗口打开链接"
 			},
 			image: {
-				insert: "Insert image",
-				cancel: "Cancel"
+				insert: "插入图片",
+				cancel: "取消"
 			},
 			html: {
-				edit: "Edit HTML"
+				edit: "编辑html"
 			},
 			colours: {
-				black: "Black",
-				silver: "Silver",
-				gray: "Grey",
-				maroon: "Maroon",
-				red: "Red",
-				purple: "Purple",
-				green: "Green",
-				olive: "Olive",
-				navy: "Navy",
-				blue: "Blue",
-				orange: "Orange"
+				black: "黑色",
+				silver: "银色",
+				gray: "灰色",
+				maroon: "褐色",
+				red: "红色",
+				purple: "紫色",
+				green: "绿色",
+				olive: "橄榄色",
+				navy: "深蓝色",
+				blue: "蓝色",
+				orange: "橘色"
 			}
 		}
 	};

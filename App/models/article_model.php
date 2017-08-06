@@ -102,7 +102,8 @@ class Article_model extends CI_Model {
 	 */
 	public function get_article_info($article_id) {
 		$condition['article_id'] = $article_id;
-		return $this -> db -> where($condition) -> get(self::TBL_ARTICLE) -> row_array();
+		$res =  $this -> db -> where($condition) -> get(self::TBL_ARTICLE) -> row_array();
+		return $res;
 	}
 
 	/**

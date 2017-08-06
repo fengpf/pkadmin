@@ -390,6 +390,13 @@ CREATE TABLE `pk_setting` (
   KEY `key` (`key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统设置表';
 
+CREATE TABLE IF NOT EXISTS `pk_ci_sessions` (
+    `id` varchar(128) NOT NULL,
+    `ip_address` varchar(45) NOT NULL,
+    `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
+    `data` blob NOT NULL,
+    KEY `ci_sessions_timestamp` (`timestamp`)
+);
 -- ----------------------------
 -- Records of pk_setting
 -- ----------------------------
