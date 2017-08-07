@@ -62,7 +62,7 @@
 
 ***请求URL***
 
-http://jelleybrown.com.cn/myweb/index.php/API/JJl/index
+http://jelleybrown.com.cn/myweb/index.php/API/JJl/articles?cid=1
 
 ***HTTP请求方式***
 
@@ -72,7 +72,7 @@ GET
 
 | 跨域支持参数   | 必选  | 类型    | 说明                 |
 | :-----       | :---  | :---    | :---                 |
-| pn   | false  | int  | 默认0 (页码)  |
+| cid   | true  | int  | 默认1 (分类id)  |
 
 ***返回结果***
 
@@ -164,3 +164,52 @@ GET
 | article_desc   | string     | 文章描述    |
 | article_pic    | string     | 文章图片    |
 | content        | string     | 文章内容    |
+
+
+### 获取文章详情
+
+***请求URL***
+
+http://jelleybrown.com.cn/myweb/index.php/API/JJl/catrgory
+
+***HTTP请求方式***
+
+GET
+
+***参数***
+
+无
+
+***返回结果***
+
+```json
+[
+    {
+        "category_id": "1",
+        "category_type": "0",
+        "category_pid": "0",
+        "category_name": "关于我们",
+        "keywords": "关于我们",
+        "sort": "1",
+        "category_desc": "关于我们主要是我们的一些信息"
+    },
+    {
+        "category_id": "3",
+        "category_type": "0",
+        "category_pid": "0",
+        "category_name": "测试分类",
+        "keywords": "测试分类",
+        "sort": "2",
+        "category_desc": "测试分类发达省份的"
+    }
+]
+```
+***字段说明***
+
+| 返回值字段    | 字段类型      |  字段说明        |
+| :----:      | :---:        | :-----:         |
+| category_id     | string     | 分类id     |
+| category_type   | string     | 分类类型    |
+| category_name   | string     | 分类名称    |
+| sort            | string     | 分类排序    |
+| category_desc   | string     | 分类描述    |

@@ -211,7 +211,7 @@ CREATE TABLE `pk_article` (
   `article_title` varchar(255) NOT NULL COMMENT '文章标题',
   `keywords` varchar(255) NOT NULL COMMENT '关键词',
   `article_desc` varchar(255) NOT NULL COMMENT '文章摘要',
-  `article_pic` varchar(255) NOT NULL DEFAULT '' COMMENT '文章插图',
+  `article_pic` text NOT NULL DEFAULT '' COMMENT '文章插图',
   `content` text NOT NULL COMMENT '文章内容',
   `issue_time` int(10) unsigned NOT NULL COMMENT '发布时间',
   `edit_time` int(10) NOT NULL COMMENT '最后更新修改时间',

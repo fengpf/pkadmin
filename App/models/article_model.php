@@ -74,6 +74,14 @@ class Article_model extends CI_Model {
 		return $this -> db -> where($condition) -> count_all_results(self::TBL_ARTICLE);
 	}
 
+    /**
+     * 函数：获取文章分类下文章数
+     */
+    public function get_article_list_of_category($category_id) {
+        $condition['category_id'] = $category_id;
+        return $this -> db -> where($condition) -> get(self::TBL_ARTICLE) -> result_array();
+    }
+
 	/**
 	 * 函数：获取文章数量
 	 * @return int 文章总数

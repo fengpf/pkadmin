@@ -23,21 +23,22 @@ class JJl extends API_Controller {
     }
 
     /**
-     * Pkadmin 前台 api action
-     * @param int $offset 偏移量，用于分页
+     * 获取分类列表
+     * @return mixeds
      */
-    public function index() {
-        $pn = isset($_GET['pn']) ? $_GET['pn'] : 0;
-        $data = $this -> data;
-        //配置分页信息
-        $config['base_url'] = site_url('API/JJl/index/');
-        $config['total_rows'] = $this -> ac -> get_article_count();
-        $config['per_page'] = 20;
-        //初始化分类页
-        $this -> pagination -> initialize($config);
-        //生成分页信息
-        $data['pageinfo'] = $this -> pagination -> create_links();
-        $article_list = $this -> ac -> get_article_list($config['per_page'], $pn);
+    public function catrgory()
+    {
+        $catrgory = $this -> ac -> get_category_list();
+        header("Access-Control-Allow-Origin: * ");
+        echo json_encode($catrgory);
+    }
+
+    /**
+     * @param int cid 文章分类id
+     */
+    public function articles() {
+        $cid = isset($_GET['cid']) ? $_GET['cid'] : 1;
+        $article_list = $this -> ac -> get_article_list_of_category($cid);
         foreach ($article_list as $k => $v) {
             $catrgory = $this -> ac -> get_category_info($v['category_id']);
             $article_list[$k]['category_name'] = $catrgory['category_name'];
@@ -49,12 +50,12 @@ class JJl extends API_Controller {
             }
             $article_list[$k]['article_pic'] = $arr;
         }
-        $data['article_list'] = $article_list;
         header("Access-Control-Allow-Origin: * ");
-        echo json_encode($data);
+        echo json_encode($article_list);
     }
 
     /**
+     * 获取文章详情
      * @return mixeds
      */
     public function detail()
@@ -71,5 +72,7 @@ class JJl extends API_Controller {
         header("Access-Control-Allow-Origin: * ");
         echo json_encode($article);
     }
+
+
 
 }
