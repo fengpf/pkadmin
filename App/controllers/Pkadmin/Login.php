@@ -60,9 +60,9 @@ class Login extends CI_Controller {
 	 */
 	public function singin() {
 		$data['setting'] = $this -> pk -> get_setting();
-		$verify_code = strtolower($this -> input -> post('verify_code'));
-		$code = strtolower($this -> session -> userdata('verify_code'));
-		if ($verify_code === $code) {
+//		$verify_code = strtolower($this -> input -> post('verify_code'));
+//		$code = strtolower($this -> session -> userdata('verify_code'));
+//		if ($verify_code === $code) {
 			$username = trim($this -> input -> post('username'));
 			$password = password(trim($this -> input -> post('password')));
 			$remember = $this -> input -> post('remember');
@@ -89,13 +89,13 @@ class Login extends CI_Controller {
 				$data['error'] = $error;
 				$this -> load -> view('Pkadmin/error.html', $data);
 			}
-		} else {
-			$error['msg'] = "验证码错误，请重新登录！";
-			$error['url'] = site_url("Pkadmin/Login/index");
-			$error['wait'] = 3;
-			$data['error'] = $error;
-			$this -> load -> view('Pkadmin/error.html', $data);
-		}
+//		} else {
+//			$error['msg'] = "验证码错误，请重新登录！";
+//			$error['url'] = site_url("Pkadmin/Login/index");
+//			$error['wait'] = 3;
+//			$data['error'] = $error;
+//			$this -> load -> view('Pkadmin/error.html', $data);
+//		}
 	}
 
 	/**

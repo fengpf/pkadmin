@@ -1,170 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<!-- BEGIN META -->
-		<?php $this->load->view('Public/headmeta.html');?>
-		<!-- END META -->
+<head>
+	<!-- BEGIN META -->
+	<?php $this->load->view('Public/headmeta.html');?>
+	<!-- END META -->
 
-		<!-- BEGIN STYLESHEET-->
-		<?php $this->load->view('Public/headcss.html');?>
-		<!-- END STYLESHEET-->
-		<title>
-			<?php echo $current['title']."-".$setting['title'];?>
-		</title>
+	<!-- BEGIN STYLESHEET-->
+	<?php $this->load->view('Public/headcss.html');?>
+	<!-- END STYLESHEET-->
+	<title>
+		<?php echo $current['title']."-".$setting['title'];?>
+	</title>
+	<!--<style type="text/css">-->
+		<!--#oringinImg #showImg img {width:100px;height: 100px}-->
+	<!--</style>-->
+</head>
 
-	</head>
+<body>
+<!-- BEGIN SECTION -->
+<section id="container">
+	<!-- BEGIN HEADER -->
+	<?php $this->load->view('Public/header.html');?>
+	<!-- END HEADER -->
+	<!-- BEGIN SIDEBAR -->
+	<?php $this->load->view('Public/sidebar.html');?>
+	<!-- END SIDEBAR -->
+	<!-- BEGIN MAIN CONTENT -->
+	<section id="main-content">
+		<!-- BEGIN WRAPPER  -->
+		<section class="wrapper">
+			<!-- TOPMENU ROW  -->
+			<?php $this->load->view('Public/topmenu.html');?>
+			<!-- TOPMENU ROW  -->
 
-	<body>
-		<!-- BEGIN SECTION -->
-		<section id="container">
-			<!-- BEGIN HEADER -->
-			<?php $this->load->view('Public/header.html');?>
-			<!-- END HEADER -->
-			<!-- BEGIN SIDEBAR -->
-			<?php $this->load->view('Public/sidebar.html');?>
-			<!-- END SIDEBAR -->
-			<!-- BEGIN MAIN CONTENT -->
-			<section id="main-content">
-				<!-- BEGIN WRAPPER  -->
-				<section class="wrapper">
-					<!-- TOPMENU ROW  -->
-					<?php $this->load->view('Public/topmenu.html');?>
-					<!-- TOPMENU ROW  -->
+			<!-- BEGIN ROW  -->
+			<div class="row">
+				<div class="col-lg-12">
+					<section class="panel-bg">
+						<header class="panel-heading">
+							<span class="label label-primary"><?php echo $current['title'];?></span>
+						</header>
+						<div class="panel-body">
+							<div class="form">
+								<form class="cmxform form-horizontal tasi-form" id="articleForm" enctype="multipart/form-data">
+									<div class="form-group">
+										<label for="category_id" class="control-label col-sm-2">文章分类</label>
+										<div class="col-sm-4">
+											<select class="form-control" name="category_id">
+												<option value="">文章分类</option>
+												<?php foreach($category_list as $item):?>
+												<option value="<?php echo $item['category_id'];?>" <?php if($item[ 'category_id'] == $article[ 'category_id']) echo 'selected="selected"';?>>
+												<?php echo $item['category_name'];?>
+												</option>
+												<?php endforeach;?>
+											</select>
+										</div>
+									</div>
 
-					<!-- BEGIN ROW  -->
-					<div class="row">
-						<div class="col-lg-12">
-							<section class="panel-bg">
-								<header class="panel-heading">
-									<span class="label label-primary"><?php echo $current['title'];?></span>
-								</header>
-								<div class="panel-body">
-									<div class="form">
-										<form class="cmxform form-horizontal tasi-form" id="articleForm" method="post" action="<?php echo site_url('Pkadmin/Article/update');?>" enctype="multipart/form-data">
-											<div class="form-group">
-												<label for="category_id" class="control-label col-sm-2">文章分类</label>
-												<div class="col-sm-4">
-													<select class="form-control" name="category_id">
-														<option value="">文章分类</option>
-														<?php foreach($category_list as $item):?>
-														<option value="<?php echo $item['category_id'];?>" <?php if($item[ 'category_id'] == $article[ 'category_id']) echo 'selected="selected"';?>>
-															<?php echo $item['category_name'];?>
-														</option>
-														<?php endforeach;?>
-													</select>
+									<div class="form-group">
+										<label for="article_title" class="control-label col-sm-2">文章名称</label>
+										<div class="col-sm-4">
+											<input class="form-control" id="article_title" name="article_title" type="text" value="<?php echo $article['article_title'];?>">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="keywords" class="control-label col-sm-2">关键词</label>
+										<div class="col-sm-4">
+											<input class="form-control" id="keywords" name="keywords" type="text" value="<?php echo $article['keywords'];?>">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="article_desc" class="control-label col-sm-2">文章摘要</label>
+										<div class="col-sm-4">
+											<textarea class="form-control" id="article_desc" name="article_desc" rows="5" placeholder="文章摘要"><?php echo $article['article_desc'];?></textarea>
+										</div>
+									</div>
+
+									<div class="form-group last">
+										<label for="article_pic" class="control-label col-sm-2">文章插图</label>
+										<div class="col-sm-3">
+											<div class="fileupload fileupload-new" data-provides="fileupload">
+												<div id="picInput">
+													<span class="btn btn-white btn-file">
+														<span class="fileupload-new">
+																<i class="fa fa-paper-clip"></i> 选择图片
+														</span>
+														<span class="fileupload-exists">
+															<i class="fa fa-undo"></i> 继续选择图片
+														</span>
+														<input id="article_pic" type="file" class="default" accept="images/*"  name="article_pic" value="上传" />
+												    </span>
 												</div>
-											</div>
-
-											<div class="form-group">
-												<label for="article_title" class="control-label col-sm-2">文章名称</label>
-												<div class="col-sm-4">
-													<input class="form-control" id="article_title" name="article_title" type="text" value="<?php echo $article['article_title'];?>">
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label for="keywords" class="control-label col-sm-2">关键词</label>
-												<div class="col-sm-4">
-													<input class="form-control" id="keywords" name="keywords" type="text" value="<?php echo $article['keywords'];?>">
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label for="article_desc" class="control-label col-sm-2">文章摘要</label>
-												<div class="col-sm-4">
-													<textarea class="form-control" id="article_desc" name="article_desc" rows="5" placeholder="文章摘要"><?php echo $article['article_desc'];?></textarea>
-												</div>
-											</div>
-
-											<div class="form-group last">
-												<label for="article_pic" class="control-label col-sm-2">文章插图</label>
-												<div class="col-sm-3">
-													<div class="fileupload fileupload-new" data-provides="fileupload">
-														<div class="fileupload-new thumbnail">
-														<?php
+												<div id="oringinImg">
+													<?php
 														   $arr = $article['article_pic'];
 														   if(!empty($arr)) {
 															   foreach ($arr as $v) {
-																	echo "<img src='{$v}' />"."<br/><br/>";
-																}
-														   }
-														?>
-														<img src="<?php
-														if (empty($article['article_pic'])) {
-														   echo base_url('Public/img/no_image.png');
-														}
-														?>">
-														</div>
-														<div class="fileupload-preview fileupload-exists thumbnail">
-														</div>
-														<div id="picInput">
-															<span class="btn btn-white btn-file">
-																<span class="fileupload-new">
-																	<i class="fa fa-paper-clip"></i> 选择图片
-																</span>
-															<span class="fileupload-exists">
-																<i class="fa fa-undo"></i> 重置
-															</span>
-															<input type="file" class="default" name="article_pic[]">
-															</span>
-															<!--<a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">-->
-																<!--<i class="fa fa-trash"></i> 删除-->
-															<!--</a>-->
-															<input id="addBtn" type="button" onclick="addPic1()" value="继续添加图片"><br/><br/>
-														</div>
-													</div>
+															        echo '<div class="thumbnail">';
+																	echo "<img src='{$v}' />";
+													                echo '<button class="dd btn btn-danger" type="button" onclick="del()"> 删除 </button>';
+													                echo '</div>';
+													      }
+													}
+													?>
 												</div>
+												<div id="showImg"></div>
 											</div>
-
-											<div class="form-group">
-												<label for="content" class="control-label col-sm-2">文章内容</label>
-												<div class="col-sm-8">
-													<textarea class="wysihtml form-control" id="content" name="content" rows="8"><?php echo $article['content'];?></textarea>
-												</div>
-											</div>
-
-											<div class="form-group">
-												<input type="hidden" name="id" id="id" value="<?php echo $article['article_id'];?>">
-												<div class="col-sm-offset-2 col-sm-10">
-													<button class="btn btn-primary" type="submit">保存</button>
-													<button class="btn btn-default" type="reset">重置</button>
-												</div>
-											</div>
-										</form>
+										</div>
 									</div>
-								</div>
-							</section>
+
+									<div class="form-group">
+										<label for="content" class="control-label col-sm-2">文章内容</label>
+										<div class="col-sm-8">
+											<textarea class="wysihtml form-control" id="content" name="content" rows="8"><?php echo $article['content'];?></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<input type="hidden" name="id" id="id" value="<?php echo $article['article_id'];?>">
+										<div class="col-sm-offset-2 col-sm-10">
+											<input class="btn btn-primary" type="submit" value="保存">
+											<input class="btn btn-default" type="reset" value="重置">
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
-					</div>
-					<!-- END ROW  -->
-				</section>
-				<!-- END WRAPPER  -->
-			</section>
-			<!-- END MAIN CONTENT -->
-			<!-- BEGIN FOOTER -->
-			<?php $this->load->view('Public/footer.html');?>
-			<!-- END FOOTER -->
+					</section>
+				</div>
+			</div>
+			<!-- END ROW  -->
 		</section>
-		<!-- END SECTION -->
-		<!-- BEGIN JS -->
-		<?php $this->load->view('Public/footjs.html');?>
-		<script src="<?php echo base_url('Public/js/pkadmin/article.js');?>"></script>
-		<script>
-			function addPic1(){
-				var addBtn =  document.getElementById('addBtn');
-				var input = document.createElement("input");
-				input.type = 'file';
-				input.name = 'article_pic[]';
-				var picInut = document.getElementById('picInput');
-				picInut.appendChild(input);
-//				if(picInut.children.length == 3){
-//					addBtn.disabled = 'disabled';
-//				}
-			}
-		</script>
-		<!-- PKADMIN ARTICLE JS -->
-		<!-- END JS -->
-	</body>
+		<!-- END WRAPPER  -->
+	</section>
+	<!-- END MAIN CONTENT -->
+	<!-- BEGIN FOOTER -->
+	<?php $this->load->view('Public/footer.html');?>
+	<!-- END FOOTER -->
+</section>
+<!-- END SECTION -->
+<!-- BEGIN JS -->
+<?php $this->load->view('Public/footjs.html');?>
+<!--<script src="<?php echo base_url('Public/js/pkadmin/article.js');?>"></script>-->
+<script>
+    var html = '';
+    var i=0;
+    function addPic() {
+        i++;
+        tyid ='#article_pic'+i;
+        var input = '<input id=' + tyid + ' type="file" class="default" accept="images/*"  name="article_pic" value="上传" />'
+        var picInut = $('showImg');
+        picInut.append(input);
+        $("#input").on("change", tyid, upload)
+    }
+
+    $(function () {
+        $("#article_pic").change(upload);
+    });
+
+
+    function del() {
+        $("#showImg").on("click", ".dd", function(e){
+            $(e.target).parent().remove()
+        });
+        $("#oringinImg").on("click", ".dd", function(e){
+            $(e.target).parent().remove()
+        });
+    }
+
+    function upload () {
+        var formData = new FormData();
+        formData.append("article_pic", document.getElementById("article_pic").files[0]);
+        $.ajax({
+            url: "<?php echo site_url('Pkadmin/Article/upload');?>",
+            type: "POST",
+            data: formData,
+            dataType: 'json',
+            /**
+             *必须false才会自动加上正确的Content-Type
+             */
+            contentType: false,
+            /**
+             * 必须false才会避开jQuery对 formdata 的默认处理
+             * XMLHttpRequest会对 formdata 进行正确的处理
+             */
+            processData: false,
+            timeout : 2000
+        })
+		.done(function(data) {
+			// 请求成功后要做的工作
+			console.log(data);
+			html += '<div class="thumbnail"><img src='+ data.url+'>' +'<button class="dd btn btn-danger" type="button" onclick="del()"> 删除 </button></div>' + '<br>';
+			$('#showImg').html(html);
+			addPic();
+		})
+		.fail(function(xhr) {
+			// 请求失败后要做的工作
+			//alert('error:' + JSON.stringify(xhr));
+			console.log('error:' + JSON.stringify(xhr));
+		})
+		.always(function() {
+			// 不管成功或失败都要做的工作
+			//console.log('complete');
+		});
+    }
+    //$(document).ready(function(){});
+	$('form').on('submit', function (e) {
+		e.preventDefault();
+		var imgArr = []
+		$('.col-sm-3 img').each(function(i, img){
+			imgArr.push(img.src)
+		})
+		console.log(imgArr);
+		article_pic = JSON.stringify(imgArr);
+		id = $("#id").val();
+		category_id = $('[name="category_id"]').val();
+		article_title = $("#article_title").val();
+		keywords = $("#keywords").val();
+		article_desc = $("#article_desc").val();
+		content = $("#content").val();
+		var formData = new FormData();
+		formData.append("id", id);
+		formData.append("category_id", category_id);
+		formData.append("article_title", article_title);
+		formData.append("keywords", keywords);
+		formData.append("article_desc", article_desc);
+		formData.append("content", content);
+		formData.append("article_pic", article_pic);
+        if (article_title == ''){
+            layer.msg("请输入文章名称！");
+            return false;
+        }
+        if (content == ''){
+            layer.msg("请输入文章正文内容！");
+            return false;
+        }
+		$.ajax({
+			url: "<?php echo site_url('Pkadmin/Article/update');?>",
+			type: "POST",
+			data: formData,
+			dataType: 'json',
+			contentType: false,
+			processData: false,
+			timeout : 2000
+		})
+		.done(function (data) {
+			// 请求成功后要做的工作
+            layer.msg(data.msg);
+			console.log("success");
+		})
+		.fail(function (xhr) {
+			// 请求失败后要做的工作
+			console.log('fail:' + JSON.stringify(xhr));
+		})
+		.error(function (xhr) {
+			console.log('error:' + xhr.responseText);
+		})
+		.always(function () {
+			// 不管成功或失败都要做的工作
+			//console.log('complete');
+		});
+		return false;
+	});
+</script>
+<!-- PKADMIN ARTICLE JS -->
+<!-- END JS -->
+</body>
 
 </html>

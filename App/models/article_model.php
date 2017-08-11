@@ -97,7 +97,8 @@ class Article_model extends CI_Model {
 	 * @return array
 	 */
 	public function get_article_list($limit, $offset) {
-        $res = $this -> db -> order_by('edit_time', 'DESC') -> limit($limit, $offset) -> get(self::TBL_ARTICLE) -> result_array();
+        //$res = $this -> db -> order_by('edit_time', 'DESC') -> limit($limit, $offset) -> get(self::TBL_ARTICLE) -> result_array();
+        $res = $this -> db -> order_by('article_id', 'ASC') -> limit($limit, $offset) -> get(self::TBL_ARTICLE) -> result_array();
         //echo $this->db->last_query();
         return $res;
 

@@ -41,7 +41,7 @@
 								</header>
 								<div class="panel-body">
 									<div class="form">
-										<form class="cmxform form-horizontal tasi-form" id="articleForm" method="post" action="<?php echo site_url('Pkadmin/Article/update');?>" enctype="multipart/form-data">
+										<form class="cmxform form-horizontal tasi-form" id="articleForm" enctype="multipart/form-data">
 											<div class="form-group">
 												<label for="category_id" class="control-label col-sm-2">文章分类</label>
 												<div class="col-sm-4">
@@ -81,26 +81,18 @@
 												<label for="article_pic" class="control-label col-sm-2">文章插图</label>
 												<div class="col-sm-3">
 													<div class="fileupload fileupload-new" data-provides="fileupload">
-														<div class="fileupload-new thumbnail">
-															<img src="<?php echo base_url('Public/img/no_image.png');?>">
-														</div>
-														<div class="fileupload-preview fileupload-exists thumbnail">
-														</div>
 														<div id="picInput">
 															<span class="btn btn-white btn-file">
 																<span class="fileupload-new">
 																	<i class="fa fa-paper-clip"></i> 选择图片
 																</span>
 															<span class="fileupload-exists">
-																<i class="fa fa-undo"></i> 重置
+																<i class="fa fa-undo"></i> 继续选择图片
 															</span>
-															<input type="file" class="default" name="article_pic[]">
+															<input id="article_pic" type="file" class="default" accept="images/*"  name="article_pic" value="上传" />
 															</span>
-															<!--<a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">-->
-																<!--<i class="fa fa-trash"></i> 删除-->
-															<!--</a>-->
-															<input id="addBtn" type="button" onclick="addPic1()" value="继续添加图片"><br/><br/>
 														</div>
+														<div id="showImg"></div>
 													</div>
 												</div>
 											</div>
@@ -137,16 +129,118 @@
 		<!-- END SECTION -->
 		<!-- BEGIN JS -->
 		<?php $this->load->view('Public/footjs.html');?>
-		<script src="<?php echo base_url('Public/js/pkadmin/article.js');?>"></script>
+		<!--<script src="<?php echo base_url('Public/js/pkadmin/article.js');?>"></script>-->
 		<script>
-			function addPic1(){
-				var addBtn =  document.getElementById('addBtn');
-				var input = document.createElement("input");
-				input.type = 'file';
-				input.name = 'article_pic[]';
-				var picInut = document.getElementById('picInput');
-				picInut.appendChild(input);
-			}
+            var html = '';
+            var i=0;
+            function addPic() {
+                i++;
+                tyid ='#article_pic'+i;
+                var input = '<input id=' + tyid + ' type="file" class="default" accept="images/*"  name="article_pic" value="上传" />'
+                var picInut = $('showImg');
+                picInut.append(input);
+                $("#input").on("change", tyid, upload)
+            }
+            $(function () {
+                $("#article_pic").change(upload);
+            });
+            function del() {
+                $("#showImg").on("click", ".dd", function(e){
+                    $(e.target).parent().remove()
+                });
+            }
+            function upload () {
+                var formData = new FormData();
+                formData.append("article_pic", document.getElementById("article_pic").files[0]);
+                $.ajax({
+                    url: "<?php echo site_url('Pkadmin/Article/upload');?>",
+                    type: "POST",
+                    data: formData,
+                    dataType: 'json',
+                    /**
+                     *必须false才会自动加上正确的Content-Type
+                     */
+                    contentType: false,
+                    /**
+                     * 必须false才会避开jQuery对 formdata 的默认处理
+                     * XMLHttpRequest会对 formdata 进行正确的处理
+                     */
+                    processData: false,
+                    timeout : 2000
+                })
+                    .done(function(data) {
+                        // 请求成功后要做的工作
+                        console.log(data);
+                        html += '<div class="thumbnail"><img src='+ data.url+'>' +'<button class="dd btn btn-danger" type="button" onclick="del()"> 删除 </button></div>' + '<br>';
+                        $('#showImg').html(html);
+                        addPic();
+                    })
+                    .fail(function(xhr) {
+                        // 请求失败后要做的工作
+                        //alert('error:' + JSON.stringify(xhr));
+                        console.log('error:' + JSON.stringify(xhr));
+                    })
+                    .always(function() {
+                        // 不管成功或失败都要做的工作
+                        console.log('complete');
+                    });
+            }
+
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+                var imgArr = []
+                $('.col-sm-3 img').each(function(i, img){
+                    imgArr.push(img.src)
+                })
+                console.log(imgArr);
+                article_pic = JSON.stringify(imgArr);
+                category_id = $('[name="category_id"]').val();
+                article_title = $("#article_title").val();
+                keywords = $("#keywords").val();
+                article_desc = $("#article_desc").val();
+                content = $("#content").val();
+                if (article_title == ''){
+                    layer.msg('请输入文章名称！');
+                    return false;
+                }
+                if (content == ''){
+                    layer.msg('请输入文章正文内容！');
+                    return false;
+                }
+                var formData = new FormData();
+                formData.append("category_id", category_id);
+                formData.append("article_title", article_title);
+                formData.append("keywords", keywords);
+                formData.append("article_desc", article_desc);
+                formData.append("content", content);
+                formData.append("article_pic", article_pic);
+                $.ajax({
+                    url: "<?php echo site_url('Pkadmin/Article/update');?>",
+                    type: "POST",
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    timeout : 2000
+                })
+				.done(function (data) {
+					// 请求成功后要做的工作
+					layer.msg(data.msg);
+					console.log("success");
+				})
+				.fail(function (xhr) {
+					// 请求失败后要做的工作
+					console.log('fail:' + JSON.stringify(xhr));
+				})
+				.error(function (xhr) {
+					console.log('error:' + xhr.responseText);
+				})
+				.always(function () {
+					// 不管成功或失败都要做的工作
+					console.log('complete');
+				});
+                return false;
+            });
 		</script>
 		<!-- PKADMIN ARTICLE JS -->
 		<!-- END JS -->

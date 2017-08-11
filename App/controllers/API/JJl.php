@@ -45,7 +45,11 @@ class JJl extends API_Controller {
             $arr =  json_decode($v['article_pic'], true);
             if (!empty($arr)) {
                 foreach ($arr as $kk => $vv) {
-                    $arr[$kk] = base_url($vv);
+                    if (strstr($vv, 'http')){
+                        $arr[$kk] = $vv;
+                    } else {
+                        $arr[$kk] = base_url($vv);
+                    }
                 }
             }
             $article_list[$k]['article_pic'] = $arr;
@@ -64,8 +68,12 @@ class JJl extends API_Controller {
         $article = $this -> ac -> get_article_info($id);
         $arr =  json_decode($article['article_pic'], true);
         if (!empty($arr)) {
-            foreach ($arr as $k => $v) {
-                $arr[$k] = base_url($v);
+            foreach ($arr as $kk => $vv) {
+                if (strstr($vv, 'http')){
+                    $arr[$kk] = $vv;
+                } else {
+                    $arr[$kk] = base_url($vv);
+                }
             }
         }
         $article['article_pic'] = $arr;
