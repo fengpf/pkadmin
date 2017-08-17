@@ -137,22 +137,29 @@ class Article extends Pkadmin_Controller {
 
 	function upload(){
         $file = $_FILES['article_pic'];  //得到传输的数据,以数组的形式
-        $name = $file['name'];      //得到文件名称，以数组的形式
+        $size = $file['size'];
+        $name = trim($file['name']);      //得到文件名称，以数组的形式
         $upload_path = "Data/upload/article_pic"; //上传文件的存放路径//当前位置
         $type = strtolower(substr($name,strrpos($name,'.')+1));//得到文件类型，并且都转化成小写
         $allow_type = array('jpg','jpeg','gif','png'); //定义允许上传的类型
-        //把非法格式的图片去除
-        if (!in_array($type, $allow_type)){
+        $url = "";
+        if ($size > (10 * 1024 *1024)) {
             $code = -1 ;
-        }
-        if (move_uploaded_file($file['tmp_name'],$upload_path.time().$name)){
+            $msg = "图片大小已超过10M!";
+        } elseif (!in_array($type, $allow_type)){//把非法格式的图片去除
+            $code = -1 ;
+            $msg = "图片类型不合法!";
+        } elseif (move_uploaded_file($file['tmp_name'],$upload_path.time().$name)){
             $code = 0;
+            $msg = "图片上传成功!";
             $url = base_url($upload_path.time().$name);
         } else{
             $code = -1 ;
-            $url = "";
+            $msg = "图片上传失败!";
         }
+        //print_r($file);
         $data['code'] = $code;
+        $data['msg'] = $msg;
         $data['url'] = $url;
         header("Access-Control-Allow-Origin: * ");
         echo json_encode($data);

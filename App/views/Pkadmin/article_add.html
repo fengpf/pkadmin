@@ -168,22 +168,23 @@
                     processData: false,
                     timeout : 2000
                 })
-                    .done(function(data) {
-                        // 请求成功后要做的工作
-                        console.log(data);
-                        html += '<div class="thumbnail"><img src='+ data.url+'>' +'<button class="dd btn btn-danger" type="button" onclick="del()"> 删除 </button></div>' + '<br>';
-                        $('#showImg').html(html);
-                        addPic();
-                    })
-                    .fail(function(xhr) {
-                        // 请求失败后要做的工作
-                        //alert('error:' + JSON.stringify(xhr));
-                        console.log('error:' + JSON.stringify(xhr));
-                    })
-                    .always(function() {
-                        // 不管成功或失败都要做的工作
-                        console.log('complete');
-                    });
+				.done(function(data) {
+					layer.msg(data.msg);
+					if (data.code != 0) {
+						return false;
+					}
+					html += '<div class="thumbnail"><img src='+ data.url+'>' +'<button class="dd btn btn-danger" type="button" onclick="del()"> 删除 </button></div>' + '<br>';
+					$('#showImg').html(html);
+				})
+				.fail(function(xhr) {
+					// 请求失败后要做的工作
+					//alert('error:' + JSON.stringify(xhr));
+					console.log('error:' + JSON.stringify(xhr));
+				})
+				.always(function() {
+					// 不管成功或失败都要做的工作
+					console.log('complete');
+				});
             }
 
             $('form').on('submit', function (e) {
