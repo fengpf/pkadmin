@@ -58,6 +58,7 @@
 												<th class="text-center "><i class="fa fa-sitemap "></i> 所属分类 </th>
 												<th class="text-center "><i class="fa fa-book"></i> 文章摘要 </th>
 												<th class="text-center "><i class="fa fa-clock-o "></i> 发布时间 </th>
+												<th class="text-center "><i class="fa fa-bolt "></i> 状态 </th>
 												<th class="text-center "><i class="fa fa-calendar-o "></i> 操作 </th>
 											</tr>
 										</thead>
@@ -80,12 +81,27 @@
 													<?php echo date("Y-m-d H:i:s",$item['issue_time']);?>
 												</td>
 												<td class="text-center ">
+													<?php
+													   if($item['state']!=-100){
+													      echo '正常';
+													   } else{
+													      echo "已删除";
+													   }
+                                                    ?>
+												</td>
+												<td class="text-center ">
 													<a href="<?php echo site_url('Pkadmin/Article/edit').'/'.$item['article_id'];?>" class="btn btn-primary btn-xs" title="修改">
 														<li class="fa fa-pencil"></li>
 													</a>
-													<a val="<?php echo site_url('Pkadmin/Article/del').'/'.$item['article_id'];?>" class="btn btn-danger btn-xs del" title="删除">
-														<li class="fa fa-trash-o"></li>
-													</a>
+													<?php if($item['state'] == -100){ ?>
+														<a val="<?php echo site_url('Pkadmin/Article/undo').'/'.$item['article_id'];?>" class="btn btn-warning btn-xs undo" title="撤销">
+															<li class="fa fa-reply"></li>
+														</a>
+													<?php } else { ?>
+														<a val="<?php echo site_url('Pkadmin/Article/del').'/'.$item['article_id'];?>" class="btn btn-danger btn-xs del" title="删除">
+															<li class="fa fa-trash-o"></li>
+														</a>
+													<?php } ?>
 												</td>
 											</tr>
 											<?php endforeach;?>
@@ -124,6 +140,16 @@
 					}, function() {});
 				});
 			});
+            $(function() {
+                $(".undo").click(function() {
+                    var url = $(this).attr('val');
+                    layer.confirm('确定要撤销此文章吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function() {
+                        window.location.href = url;
+                    }, function() {});
+                });
+            });
 		</script>
 		<!-- END JS -->
 	</body>

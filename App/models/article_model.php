@@ -140,9 +140,9 @@ class Article_model extends CI_Model {
 	 * @param int $article_id 文章分类id
 	 * @return bool
 	 */
-	public function del_article($article_id) {
-		$condition['article_id'] = $article_id;
-		return $this -> db -> where($condition) -> delete(self::TBL_ARTICLE);
+	public function del_article($params) {
+		$condition['article_id'] = $params['article_id'];
+//		return $this -> db -> where($condition) -> delete(self::TBL_ARTICLE);
+        return $this -> db -> where($condition) -> update(self::TBL_ARTICLE, $params);
 	}
-
 }

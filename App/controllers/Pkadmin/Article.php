@@ -81,7 +81,10 @@ class Article extends Pkadmin_Controller {
 	 */
 	public function del($id) {
 		$data = $this -> data;
-		if ($this -> ac -> del_article($id)) {
+        $params['article_id'] = $id;
+        $params['state'] = -100;
+        $params['edit_time'] = time();
+		if ($this -> ac -> del_article($params)) {
 			$this -> pk -> add_log('删除文章，ID：' . $id, $this -> ADMINISTRSTORS['admin_id'], $this -> ADMINISTRSTORS['username']);
 			$success['msg'] = "删除文章操作成功！";
 			$success['url'] = site_url("Pkadmin/Article/index");
@@ -96,6 +99,30 @@ class Article extends Pkadmin_Controller {
 			$this -> load -> view('error.html', $data);
 		}
 	}
+
+    /**
+     * 撤销文章删除
+     */
+    public function undo($id) {
+        $data = $this -> data;
+        $params['article_id'] = $id;
+        $params['state'] = 0;
+        $params['edit_time'] = time();
+        if ($this -> ac -> update_article($id, $params)) {
+            $this -> pk -> add_log('撤销文章，ID：' . $id, $this -> ADMINISTRSTORS['admin_id'], $this -> ADMINISTRSTORS['username']);
+            $success['msg'] = "撤销文章操作成功！";
+            $success['url'] = site_url("Pkadmin/Article/index");
+            $success['wait'] = 3;
+            $data['success'] = $success;
+            $this -> load -> view('success.html', $data);
+        } else {
+            $error['msg'] = "撤销文章操作失败！";
+            $error['url'] = site_url("Pkadmin/Article/index");
+            $error['wait'] = 3;
+            $data['error'] = $error;
+            $this -> load -> view('error.html', $data);
+        }
+    }
 
 	/**
 	 * 新增修改文章内容

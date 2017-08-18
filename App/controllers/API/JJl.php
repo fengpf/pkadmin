@@ -40,6 +40,9 @@ class JJl extends API_Controller {
         $cid = isset($_GET['cid']) ? $_GET['cid'] : 1;
         $article_list = $this -> ac -> get_article_list_of_category($cid);
         foreach ($article_list as $k => $v) {
+            if ($v['state'] == -100) {
+               continue;
+            }
             $catrgory = $this -> ac -> get_category_info($v['category_id']);
             $article_list[$k]['category_name'] = $catrgory['category_name'];
             $arr =  json_decode($v['article_pic'], true);
