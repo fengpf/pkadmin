@@ -29,14 +29,14 @@ sudo apt install php-mysql php-curl php-mcrypt php-gd php-memcached php-redis
 
 修改source.list配置文件：
 
-deb http://packages.dotdeb.org jessie all
-deb-src http://packages.dotdeb.org jessie all
+deb http://packages.dotdeb.org jessie all  
+deb-src http://packages.dotdeb.org jessie all  
 
 安装php7相关的组件：
-wget https://www.dotdeb.org/dotdeb.gpg
-sudo apt-key add dotdeb.gpg
+wget https://www.dotdeb.org/dotdeb.gpg  
+sudo apt-key add dotdeb.gpg  
 
-sudo apt-get update
+sudo apt-get update  
 sudo apt-get install php7.0 php7.0-fpm php7.0-memcached php7.0-common php7.0-dev php7.0-dbg php7.0-curl php7.0-intl php7.0-mysql php7.0-redis php7.0-json php7.0-curl
 
 
