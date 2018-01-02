@@ -77,7 +77,7 @@ $db['default'] = array(
 	'dsn'	=> 'mysql:dbname=pkadmin;host=localhost',//pdo
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => 'fpf',
+	'password' => 'root',
 	'database' => '',
 	'dbdriver' => 'pdo',//pdo /mysql
 	'dbprefix' => 'pk_',
