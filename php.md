@@ -46,6 +46,11 @@ sudo apt-get install php7.0 php7.0-fpm php7.0-memcached php7.0-common php7.0-dev
 
 cd ~
 wget http://cn2.php.net/distributions/php-7.0.6.tar.bz2
+
+apt-get install openssl
+find / -name libssl.so
+ln -s /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib
+
 cd php-7.0.6
 './configure'  '--prefix=/usr/local/php7' '--with-config-file-path=/usr/local/php7/etc' '--enable-opcache' '--enable-inline-optimization' '--disable-rpath' '--enable-shared' '--enable-fpm' '--with-fpm-user=www-data' '--with-fpm-group=www-data' '--with-gettext' '--with-iconv' '--with-mcrypt' '--with-mhash' '--with-openssl' '--with-iconv-dir' '--with-zlib' '--with-zlib-dir' '--enable-soap' '--enable-ftp' '--enable-mbstring' '--enable-exif' '--disable-ipv6' '--enable-xml' '--enable-zip' '--enable-bcmath' '--with-libxml-dir' '--enable-pcntl' '--enable-shmop' '--enable-sysvsem' '--enable-sysvmsg' '--enable-sysvshm' '--enable-sockets' '--with-curl' '--with-bz2' '--with-sqlite3' '--with-pdo-sqlite' '--with-pear' '--with-mysqli=mysqlnd' '--with-pdo-mysql=mysqlnd' '--with-xsl'
 中间如果有系统以来的lib库，请麻烦自行google之后安装
