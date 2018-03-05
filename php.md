@@ -57,6 +57,9 @@ cd php-7.0.6
 make -j4
 sudo make install
 
+install mysql & nginx
+https://segmentfault.com/a/1190000009330588
+
 ```
 
 php.ini初始化
